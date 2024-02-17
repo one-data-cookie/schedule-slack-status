@@ -1,4 +1,4 @@
-// Define daily schedules
+// Define daily schedules, needs to run before any UPDATE_STATUS_CRONS or Calendar events
 var UPDATE_DAILY_CRONS = ['0 4 * * 1-5']; // 4am on workdays
 
 // Define Slack status schedules (that don't overlap)
