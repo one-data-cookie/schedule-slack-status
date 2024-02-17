@@ -1,0 +1,54 @@
+// Get details of next event for today
+// https://developers.google.com/apps-script/reference/calendar/calendar
+function getNextCalEventDetails() {
+  var now = new Date();
+  var endOfDay = new Date();
+  endOfDay.setHours(23, 59, 59, 999); // end of today
+
+  var events = CalendarApp.getCalendarById('9494ef6b979bb3bf880c5b461f31e3569f641a8a25cfbc82915cb97b2083e030@group.calendar.google.com').getEvents(now, endOfDay);
+  if (events.length === 0) {
+    console.log('No more events today.');
+    return {};
+  }
+
+  var nextEvent = events[0]
+  var nextEventPayload = {
+    name: nextEvent.getTitle(),
+    startTime: nextEvent.getStartTime(),
+    endTime: nextEvent.getEndTime(),
+    length: (nextEvent.getEndTime() - nextEvent.getStartTime()) / (1000 * 60) // in mins
+  };
+
+  console.log(nextEventPayload);
+  return nextEventPayload;
+}
+
+// Get next start or end time of any event today
+function getNextCalStartOrEnd() {
+  var now = new Date();
+
+  var events = CalendarApp.getCalendarById('9494ef6b979bb3bf880c5b461f31e3569f641a8a25cfbc82915cb97b2083e030@group.calendar.google.com').getEventsForDay(now);
+  if (events.length === 0) {
+    console.log('No more events today.');
+    return {};
+  }
+  
+  var closestTime = null;
+  events.forEach(function(event) {
+    var startTime = event.getStartTime();
+    var endTime = event.getEndTime();
+
+    // Check start time
+    if (startTime > now && (!closestTime || startTime < closestTime)) {
+      closestTime = startTime;
+    }
+
+    // Check end time
+    if (endTime > now && (!closestTime || endTime < closestTime)) {
+      closestTime = endTime;
+    }
+  });
+
+  console.log(closestTime);
+  return closestTime;
+}
