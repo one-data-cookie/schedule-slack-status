@@ -18,15 +18,18 @@ CRON expressions, and even automatically update it based on your Google Calendar
   (like a [huddle](https://mashable.com/article/how-to-hide-slack-huddle-status))
 
 ## Setup
+- Create a new GAS project in your Google account [here](https://script.google.com/home) 
 - Clone this to your GAS (use [`leonhartX/gas-github`](https://github.com/leonhartX/gas-github)
   with turning on GAS API in [User Settings](https://script.google.com/home/usersettings))
 - Set up [Cloud Logging](https://developers.google.com/apps-script/guides/logging#cloud_logging)
-- Add `CALENDAR_ID` under *Project Settings > Script Properties*
-- Create a Slack app from [here](https://api.slack.com/apps),
-  add scopes `dnd:write`, `users.profile:read`, `users.profile:write` in *OAuth & Permissions*,
-  install the app to the right Slack Workspace,
-  copy [user token (`xoxp-*`)](https://api.slack.com/authentication/token-types#user),
-  add it as `SLACK_API_TOKEN` under *Project Settings > Script Properties*
+  for your new GAS project
+- Add your Google Calendar's ID as `CALENDAR_ID` into *Project Settings > Script Properties*
+- Set up your Slack:
+  - Create a Slack app from [here](https://api.slack.com/apps)
+  - Add scopes `dnd:write`, `users.profile:read`, `users.profile:write` in *OAuth & Permissions*
+  - Install the app to the right Slack Workspace
+  - Copy [user token (`xoxp-*`)](https://api.slack.com/authentication/token-types#user)
+  - Add it as `SLACK_API_TOKEN` into *Project Settings > Script Properties*
 - Set CRON expressions for daily sync and status schedules, as well as emojis for events
 - Run `updateDaily` once
-- Enjoy!
+- Enjoy! 🎉
