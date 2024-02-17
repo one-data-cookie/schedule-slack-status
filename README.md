@@ -31,5 +31,6 @@ CRON expressions, and even automatically update it based on your Google Calendar
   - Copy [user token (`xoxp-*`)](https://api.slack.com/authentication/token-types#user)
   - Add it as `SLACK_API_TOKEN` into *Project Settings > Script Properties*
 - Set CRON expressions for daily sync and status schedules, as well as emojis for events
-- Run `updateDaily` once
-- Enjoy! 🎉
+  in `assignHelper.js`
+- Run `updateDaily.js` once to launch
+- Enjoy and update as needed! 🎉
