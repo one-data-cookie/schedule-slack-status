@@ -1,7 +1,6 @@
-// unify let, var, const
-// improve logging and docs
-// rename to schedule-slack-status on GH
-// test, close, and open-source it
+// TODO: test it out
+// TODO: improve logging and docs
+// TODO: close it up
 
 // Add function with logic for setting Slack status
 function setSlackStatus() {
