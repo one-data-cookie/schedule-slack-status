@@ -18,7 +18,7 @@ CRON expressions, and even automatically update it based on your Google Calendar
   (like a [huddle](https://mashable.com/article/how-to-hide-slack-huddle-status))
 
 ## Setup
-- Clone this to your GAS (use [leonhartX/gas-github](https://github.com/leonhartX/gas-github)
+- Clone this to your GAS (use [`leonhartX/gas-github`](https://github.com/leonhartX/gas-github)
   with turning on GAS API in [User Settings](https://script.google.com/home/usersettings))
 - Set up [Cloud Logging](https://developers.google.com/apps-script/guides/logging#cloud_logging)
 - Add `CALENDAR_ID` under *Project Settings > Script Properties*
