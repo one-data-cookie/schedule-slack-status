@@ -1,5 +1,3 @@
-var calendarId = PropertiesService.getScriptProperties().getProperty('CALENDAR_ID');
-
 // Get details of next event for today
 // https://developers.google.com/apps-script/reference/calendar/calendar
 function getNextCalEventDetails() {
@@ -7,6 +5,7 @@ function getNextCalEventDetails() {
   var endOfDay = new Date();
   endOfDay.setHours(23, 59, 59, 999); // end of today
 
+  var calendarId = PropertiesService.getScriptProperties().getProperty('CALENDAR_ID');
   var events = CalendarApp.getCalendarById(calendarId).getEvents(now, endOfDay);
   if (events.length === 0) {
     console.log('No more events today.');
@@ -29,6 +28,7 @@ function getNextCalEventDetails() {
 function getNextCalStartOrEnd() {
   var now = new Date();
 
+  var calendarId = PropertiesService.getScriptProperties().getProperty('CALENDAR_ID');
   var events = CalendarApp.getCalendarById(calendarId).getEventsForDay(now);
   if (events.length === 0) {
     console.log('No more events today.');
