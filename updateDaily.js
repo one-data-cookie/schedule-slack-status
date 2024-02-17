@@ -8,5 +8,5 @@ function updateDaily() {
 
   // Schedule next triggers
   createTriggerForTime(getNextCronTriggerTime(UPDATE_DAILY_CRONS), 'updateDaily');
-  createTriggerForTime(getNextCronTriggerTime(UPDATE_STATUS_CRONS.flatMap(schedule => schedule.crons)), 'updateStatus');
+  createNextUpdateStatusTrigger();
 }

@@ -1,10 +1,19 @@
-// create function out of 26+ and use both here and in updateDaily
 // set up the logic: overriding status with special character (> nothing), cron schedule (> cron schedule), calendar (> calendar start, emoji vs not emoji), else (> nothing)
 
 // unify let, var, const
 // improve logging and docs
 // rename to schedule-slack-status on GH
 // test, close, and open-source it
+
+// Add function for creating next updateStatus trigger
+function createNextUpdateStatusTrigger() {
+  let cronExpressions = UPDATE_STATUS_CRONS.flatMap(schedule => schedule.crons);
+  let nextCronTime = getNextCronTriggerTime(cronExpressions);
+  let nextCalTime = getNextCalStartOrEnd(); 
+
+  var nextTriggerTime = nextCronTime < nextCalTime ? nextCronTime : nextCalTime; // ternary operator (if then else)
+  createTriggerForTime(nextTriggerTime, 'updateStatus');
+}
 
 // Calculate the latest trigger time for each schedule and update status if within 5 minutes
 function updateStatus() {
@@ -22,11 +31,6 @@ function updateStatus() {
     }
   });
 
-  // Create next updateStatus trigger
-  let cronExpressions = UPDATE_STATUS_CRONS.flatMap(schedule => schedule.crons);
-  let nextCronTime = getNextCronTriggerTime(cronExpressions);
-  let nextCalTime = getNextCalStartOrEnd(); 
-
-  var nextTriggerTime = nextCronTime < nextCalTime ? nextCronTime : nextCalTime; // ternary operator (if then else)
-  createTriggerForTime(nextTriggerTime, 'updateStatus');
+  // Create next trigger
+  createNextUpdateStatusTrigger();
 }
