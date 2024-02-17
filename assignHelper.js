@@ -6,6 +6,12 @@ var UPDATE_STATUS_CRONS = [
   { crons: ['0 8 * * 1-5'], statusEmoji: ":coffee:", statusText: "Morning Coffee", expirationMin: 30, dnd: true },
 ];
 
+// Define a simple mapping for the emojis
+var EMOJI_MAP = {
+  '🐝': ':bee:',
+  '🥗': 'green_salad:'
+};
+
 function assignVariables() {
   console.log("All variables set up!")
 }

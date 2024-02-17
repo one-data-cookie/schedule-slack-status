@@ -31,7 +31,18 @@ function setSlackStatus() {
   // CASE 2: There is the next calendar event that started within 5 mins -> update Slack status
   var nextEventDetails = getNextCalEventDetails();
   if (nextEventDetails.name && now - nextEventDetails.startTime <= 5 * 60 * 1000) { // if within 5 mins
-    setSlackStatus(":phone:", nextEventDetails.name, nextEventDetails.length, true);
+    let statusEmoji = ":phone:"; // default emoji
+    let statusText = nextEventDetails.name.trim();
+    let expirationMin = nextEventDetails.length;
+    let dnd = true;
+
+    let firstChar = statusText.charAt(0);
+    if (EMOJI_MAP[firstChar]) { // if the first character is one of the emojis
+      statusEmoji = emojiMap[firstChar]; // use the mapped Slack emoji code
+      statusText = statusText.substring(1).trim(); // remove the emoji and any leading whitespace
+    }
+
+    setSlackStatus(statusEmoji, statusText, expirationMin, dnd);
     console.log('Slack status set based on your calendar event.')
     updated = true;
   }
