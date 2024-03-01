@@ -3,7 +3,7 @@
 // TODO: close it up
 
 // Add function with logic for setting Slack status
-function setSlackStatus() {
+function updateSlackStatus() {
   var updated = false;
 
   // CASE 0: There already is a Slack status -> do nothing
@@ -64,7 +64,7 @@ function updateStatus() {
   assignVariables();
 
   // Set Slack status
-  setSlackStatus();
+  updateSlackStatus();
 
   // Delete all triggers, except updateDaily trigger
   deleteAllTriggers('updateDaily');
