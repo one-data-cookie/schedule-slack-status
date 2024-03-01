@@ -10,7 +10,7 @@ function updateSlackStatus() {
   var isSlackStatusEmpty = checkSlackStatusIsEmpty();
   if (!isSlackStatusEmpty) {
     console.log('Slack status is already set, not updating.');
-    return; // exit the function
+    return updated; // exit the function
   }
 
   // CASE 1: There is a scheduled Slack status via CRON expression -> update Slack status 
@@ -25,7 +25,7 @@ function updateSlackStatus() {
       return; // exit the loop
     }
   });
-  if (updated) return; // exit the function
+  if (updated) return updated; // exit the function
 
   // CASE 2: There is the next calendar event that started within 5 mins -> update Slack status
   var nextEventDetails = getNextCalEventDetails();
@@ -45,7 +45,7 @@ function updateSlackStatus() {
     console.log("Slack status set based on your calendar event.")
     updated = true;
   }
-  if (updated) return; // exit the function with true
+  if (updated) return updated; // exit the function with true
 }
 
 // Add function for creating next updateStatus trigger
@@ -64,6 +64,7 @@ function createNextUpdateStatusTrigger() {
 // Update status
 function updateStatus() {
   // Load shared variables
+  console.log('Loading shared variables');
   try {
     assignVariables();
   } catch (e) {
@@ -71,13 +72,20 @@ function updateStatus() {
   }
 
   // Update Slack status
+  console.log('Updating Slack status');
   try {
-    updateSlackStatus();
+    var wasUpdated = updateSlackStatus();
+    if (wasUpdated) {
+      console.log("Slack status updated successfully.");
+    } else {
+      console.log("Slack status update failed, but no error was thrown.");
+    }
   } catch (e) {
     console.log("Failed to update Slack status: " + e.toString());
   }
 
   // Delete triggers, except updateDaily trigger
+  console.log('Deleting triggers, except updateDaily');
   try {
     deleteTriggers('updateDaily');
   } catch (e) {
@@ -85,6 +93,7 @@ function updateStatus() {
   }
 
   // Create next updateStatus trigger 
+  console.log('Creating next updateStatus trigger');
   try {
     createNextUpdateStatusTrigger();
   } catch (e) {

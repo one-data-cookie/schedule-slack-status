@@ -1,6 +1,7 @@
 // Update everything every day
 function updateDaily() {
   // Load shared variables
+  console.log('Loading shared variables');
   try {
     assignVariables();
   } catch (e) {
@@ -8,6 +9,7 @@ function updateDaily() {
   }
 
   // Delete all triggers
+  console.log('Deleting all triggers');
   try {
     deleteTriggers();
   } catch (e) {
@@ -15,6 +17,7 @@ function updateDaily() {
   }
 
   // Schedule next triggers
+  console.log('Scheduling next triggers');
   try {
     createTriggerForTime(getNextCronTriggerTime(UPDATE_DAILY_CRONS), 'updateDaily');
   } catch (e) {
