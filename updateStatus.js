@@ -78,7 +78,7 @@ function updateStatus() {
     if (wasUpdated) {
       console.log("Slack status updated successfully.");
     } else {
-      console.log("Slack status update failed, but no error was thrown.");
+      console.log("Slack status not updated.");
     }
   } catch (e) {
     console.log("Failed to update Slack status: " + e.toString());
