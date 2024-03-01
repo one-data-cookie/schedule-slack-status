@@ -1,5 +1,4 @@
 // TODO: test it out
-// TODO: improve logging and docs
 // TODO: close it up
 
 // Add function with logic for setting Slack status
