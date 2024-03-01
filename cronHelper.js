@@ -58,7 +58,7 @@ function getLatestCronTriggerTime(cronExpressions) {
       latestTrigger = lastTrigger;
     }
   });
-  console.log('Latest CRON trigger time: ' + lastTrigger.toString());
+  console.log('Latest CRON trigger time: ' + latestTrigger.toString());
 
   return latestTrigger;
 }
