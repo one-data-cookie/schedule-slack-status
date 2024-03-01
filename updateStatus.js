@@ -20,7 +20,7 @@ function updateSlackStatus() {
     var latestTriggerTime = getLatestCronTriggerTime(schedule.crons);
     if (latestTriggerTime && (now - latestTriggerTime <= 5 * 60 * 1000)) { // if within 5 mins
       setSlackStatus(schedule.statusEmoji, schedule.statusText, schedule.expirationMin, schedule.dnd);
-      console.log('Slack status set based on your schedule.')
+      console.log("Slack status set based on your schedule.")
       updated = true;
       return; // exit the loop
     }
@@ -42,7 +42,7 @@ function updateSlackStatus() {
     }
 
     setSlackStatus(statusEmoji, statusText, expirationMin, dnd);
-    console.log('Slack status set based on your calendar event.')
+    console.log("Slack status set based on your calendar event.")
     updated = true;
   }
   if (updated) return; // exit the function with true
@@ -52,23 +52,39 @@ function updateSlackStatus() {
 function createNextUpdateStatusTrigger() {
   let cronExpressions = UPDATE_STATUS_CRONS.flatMap(schedule => schedule.crons);
   let nextCronTime = getNextCronTriggerTime(cronExpressions);
-  let nextCalTime = getNextCalStartOrEnd(); 
+  let nextCalTime = getNextCalStartOrEnd();
 
   var nextTriggerTime = nextCronTime < nextCalTime ? nextCronTime : nextCalTime; // ternary operator (if then else)
   createTriggerForTime(nextTriggerTime, 'updateStatus');
 }
 
-// Update Slack status
+// Update status
 function updateStatus() {
   // Load shared variables
-  assignVariables();
+  try {
+    assignVariables();
+  } catch (e) {
+    console.log("Failed to assign variables: " + e.toString());
+  }
 
-  // Set Slack status
-  updateSlackStatus();
+  // Update Slack status
+  try {
+    updateSlackStatus();
+  } catch (e) {
+    console.log("Failed to update Slack status: " + e.toString());
+  }
 
-  // Delete all triggers, except updateDaily trigger
-  deleteAllTriggers('updateDaily');
+  // Delete triggers, except updateDaily trigger
+  try {
+    deleteTriggers('updateDaily');
+  } catch (e) {
+    console.log("Failed delete triggers: " + e.toString());
+  }
 
   // Create next updateStatus trigger 
-  createNextUpdateStatusTrigger();
+  try {
+    createNextUpdateStatusTrigger();
+  } catch (e) {
+    console.log("Failed to create next updateStatus trigger: " + e.toString());
+  }
 }
