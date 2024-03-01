@@ -58,7 +58,7 @@ function getLatestCronTriggerTime(cronExpressions) {
       latestTrigger = lastTrigger;
     }
   });
-  console.log('Latest CRON ' + (latestTrigger ? 'trigger time: ' + latestTrigger.toString() : ' is NaN'));
+  console.log('Latest CRON ' + (latestTrigger ? 'trigger time: ' + latestTrigger.toString() : 'is NaN'));
 
   return latestTrigger;
 }
