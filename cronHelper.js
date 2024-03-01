@@ -37,6 +37,8 @@ function getNextCronTriggerTime(cronExpressions) {
   });
 
   const nextTrigger = allTriggers.sort((a, b) => a - b)[0]; // earliest date
+  console.log('Next CRON trigger time: ' + nextTrigger.toString());
+
   return nextTrigger;
 };
 
