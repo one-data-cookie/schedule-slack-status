@@ -7,7 +7,6 @@ function getNextCalEventDetails() {
 
   var calendarId = PropertiesService.getScriptProperties().getProperty('CALENDAR_ID');
   var events = CalendarApp.getCalendarById(calendarId).getEvents(now, endOfDay);
-  console.log('Upcoming events: ' + events.toString());
   if (events.length === 0) {
     console.log('No more events today.');
     return {};
@@ -29,12 +28,14 @@ function getNextCalEventDetails() {
 function getNextCalStartOrEnd() {
   var now = new Date();
 
+  // Retrieve calendar ID and fetch events for the current day
   var calendarId = PropertiesService.getScriptProperties().getProperty('CALENDAR_ID');
   var events = CalendarApp.getCalendarById(calendarId).getEventsForDay(now);
-  console.log('Events for today: ' + events.toString());  
+
+  // Early return if no events today
   if (events.length === 0) {
     console.log('No events today.');
-    return {};
+    return null; // or {} if you specifically need an empty object
   }
   
   var closestTime = null;
@@ -42,17 +43,23 @@ function getNextCalStartOrEnd() {
     var startTime = event.getStartTime();
     var endTime = event.getEndTime();
 
-    // Check start time
+    // Check if the start time is after now and before the current closest time
     if (startTime > now && (!closestTime || startTime < closestTime)) {
       closestTime = startTime;
     }
 
-    // Check end time
+    // Check if the end time is after now and before the current closest time
     if (endTime > now && (!closestTime || endTime < closestTime)) {
       closestTime = endTime;
     }
   });
 
-  console.log('Next time for event is: ' + closestTime.toString());
+  // Handle the case where there's no other event today
+  if (closestTime === null) {
+    console.log('No other events today.');
+    return null;
+  }
+
+  console.log('Next time for event is: ' + closestTime);
   return closestTime;
 }
