@@ -9,7 +9,7 @@ function deleteTriggers(exceptFunctionName) {
     }
     ScriptApp.deleteTrigger(trigger);
   }
-  console.log('Deleted triggers' + (exceptFunctionName ? ', except  ' + exceptFunctionName : ' with no exceptions'));
+  console.log('Deleted triggers, ' + (exceptFunctionName ? 'except  ' + exceptFunctionName : 'with no exceptions'));
 }
 
 function createTriggerForTime(triggerDate, targetFunctionName) {
