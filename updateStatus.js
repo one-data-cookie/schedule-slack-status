@@ -59,7 +59,6 @@ function createNextUpdateStatusTrigger() {
                    : nextCronTime || nextCalTime; // if at least one is null, choose the non-null one
 
   createTriggerForTime(nextTriggerTime, 'updateStatus');
-  console.log("Next updateStatus trigger created for " + nextTriggerTime.toString())
 }
 
 // Update status
