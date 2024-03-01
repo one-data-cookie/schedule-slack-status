@@ -7,6 +7,7 @@ function getNextCalEventDetails() {
 
   var calendarId = PropertiesService.getScriptProperties().getProperty('CALENDAR_ID');
   var events = CalendarApp.getCalendarById(calendarId).getEvents(now, endOfDay);
+  console.log('Upcoming events: ' + events.toString());
   if (events.length === 0) {
     console.log('No more events today.');
     return {};
@@ -20,7 +21,7 @@ function getNextCalEventDetails() {
     length: (nextEvent.getEndTime() - nextEvent.getStartTime()) / (1000 * 60) // in mins
   };
 
-  console.log(nextEventPayload);
+  console.log('Next calendar event is: ' + nextEventPayload.toString());
   return nextEventPayload;
 }
 
@@ -30,8 +31,9 @@ function getNextCalStartOrEnd() {
 
   var calendarId = PropertiesService.getScriptProperties().getProperty('CALENDAR_ID');
   var events = CalendarApp.getCalendarById(calendarId).getEventsForDay(now);
+  console.log('Events for today: ' + events.toString());  
   if (events.length === 0) {
-    console.log('No more events today.');
+    console.log('No events today.');
     return {};
   }
   
@@ -51,6 +53,6 @@ function getNextCalStartOrEnd() {
     }
   });
 
-  console.log(closestTime);
+  console.log('Next time for event is: ' + closestTime.toString());
   return closestTime;
 }
