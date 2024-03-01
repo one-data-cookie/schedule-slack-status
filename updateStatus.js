@@ -54,7 +54,10 @@ function createNextUpdateStatusTrigger() {
   let nextCronTime = getNextCronTriggerTime(cronExpressions);
   let nextCalTime = getNextCalStartOrEnd();
 
-  var nextTriggerTime = nextCronTime < nextCalTime ? nextCronTime : nextCalTime; // ternary operator (if then else)
+  // If both are non-null, choose the smaller (if then else)
+  var nextTriggerTime = (nextCronTime && nextCalTime) ? (nextCronTime < nextCalTime ? nextCronTime : nextCalTime) 
+                   : nextCronTime || nextCalTime; // if at least one is null, choose the non-null one
+
   createTriggerForTime(nextTriggerTime, 'updateStatus');
 }
 
