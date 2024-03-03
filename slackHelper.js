@@ -90,7 +90,3 @@ function setSlackStatus(statusEmoji, statusText, expirationMin, dnd) {
     setDoNotDisturb(expirationMin, token);
   }
 }
-
-function getSlackStatus() {
-  var token = PropertiesService.getScriptProperties().getProperty('SLACK_API_TOKEN');
-}
