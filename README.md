@@ -12,12 +12,6 @@ What's nice is that it works even when you're off as it runs on Google servers.
   - If the Calendar event starts with one of predefined emojis, sets it as status emoji
 - Creates and deletes GAS triggers automatically, with continuous and daily clean-up
 
-## Best to avoid
-- Colliding CRON schedules
-- Colliding Calendar events
-- Letting anything else set you Slack status
-  (like a [huddle](https://mashable.com/article/how-to-hide-slack-huddle-status))
-
 ## Setup
 - Create a new GAS project in your Google account [here](https://script.google.com/home) 
 - Clone this to your GAS (use [`leonhartX/gas-github`](https://github.com/leonhartX/gas-github)
@@ -36,3 +30,9 @@ What's nice is that it works even when you're off as it runs on Google servers.
   in `assignHelper.js`
 - Run `updateDaily.js` once to launch
 - Enjoy and update as needed! 🎉
+
+## Best to avoid
+- Colliding CRON schedules
+- Colliding Calendar events
+- Letting anything else set you Slack status
+  (like a [huddle](https://mashable.com/article/how-to-hide-slack-huddle-status))
