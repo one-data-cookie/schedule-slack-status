@@ -9,7 +9,7 @@ var UPDATE_STATUS_CRONS = [
 // Define a simple mapping for the emojis
 var EMOJI_MAP = {
   '🐝': ':bee:',
-  '🥗': 'green_salad:'
+  '🥗': ':green_salad:'
 };
 
 function assignVariables() {
