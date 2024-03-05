@@ -37,28 +37,27 @@ function getNextCronTriggerTime(cronExpressions) {
   });
 
   const nextTrigger = allTriggers.sort((a, b) => a - b)[0]; // earliest date
-  console.log('Next CRON trigger time: ' + nextTrigger.toString());
 
+  console.log('Next CRON trigger time: ' + nextTrigger.toString());
   return nextTrigger;
 };
 
-// Get the latest recent trigger time from all CRON expressions
-function getLatestRecentCronTriggerTime(cronExpressions) {
+// Get a recent trigger time from all CRON expressions
+function getRecentCronTriggerTime(cronExpressions) {
   eval(loadCronLibrary());
-  let latestTrigger = null;
+  let recentTrigger = null;
 
   cronExpressions.forEach(cronExpression => {
-    // recent run = next run 10m ago
     let now = new Date();
-    let tenMinsAgo = new Date(now.getTime() - (10 * 60000)); // 10m ago
+    let fourMinsAgo = new Date(now.getTime() - (4 * 60000)); // 4m ago
 
-    const lastTrigger = Cron(cronExpression).nextRun(tenMinsAgo);
+    const nextTrigger = Cron(cronExpression).nextRun(fourMinsAgo); // runs from 4m ago and onwards
 
-    if (lastTrigger < now && (latestTrigger === null || lastTrigger > latestTrigger)) { //
-      latestTrigger = lastTrigger;
+    if (nextTrigger < now && (recentTrigger === null || nextTrigger > recentTrigger)) {
+      recentTrigger = nextTrigger; // assign if in the past and empty or closer to now
     }
   });
-  console.log('Latest recent CRON ' + (latestTrigger ? 'trigger time: ' + latestTrigger.toString() : 'is not found'));
 
-  return latestTrigger;
+  console.log('Recent CRON ' + (recentTrigger ? 'trigger time: ' + recentTrigger.toString() : 'is not found'));
+  return recentTrigger;
 }

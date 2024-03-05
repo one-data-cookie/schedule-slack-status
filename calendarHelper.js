@@ -1,28 +1,36 @@
-// Get details of next event for today
+// Get details of a recent event for today
 // https://developers.google.com/apps-script/reference/calendar/calendar
-function getNextCalEventDetails() {
+function getRecentCalEventDetails() {
+  var tz = Session.getTimeZone();
   var now = new Date();
   var endOfDay = new Date();
   endOfDay.setHours(23, 59, 59, 999); // end of today
 
   var calendarId = PropertiesService.getScriptProperties().getProperty('CALENDAR_ID');
-  var events = CalendarApp.getCalendarById(calendarId).getEvents(now, endOfDay);
+  var events = CalendarApp.getCalendarById(calendarId).getEvents(now, endOfDay); // from now onwards, also in progress
   if (events.length === 0) {
     console.log('No more events today.');
     return {};
   }
 
-  var nextEvent = events[0]
-  var nextEventPayload = {
-    name: nextEvent.getTitle(),
-    startTime: nextEvent.getStartTime(),
-    endTime: nextEvent.getEndTime(),
-    length: (nextEvent.getEndTime() - nextEvent.getStartTime()) / (1000 * 60) // in mins
-  };
+  var recentEventPayload = null;
+  events.forEach(event => {
+    var eventPayload = {
+      name: event.getTitle(),
+      startTime: event.getStartTime(),
+      endTime: event.getEndTime(),
+      length: (event.getEndTime() - event.getStartTime()) / (1000 * 60) // in mins
+    };
 
-  console.log(`Next calendar event is: ${nextEventPayload.name} \
-  (${nextEventPayload.startTime.toLocaleString()} - ${nextEventPayload.endTime.toLocaleString()})`);
-  return nextEventPayload;
+    if (eventPayload.startTime < now && (recentEventPayload === null || recentEventPayload.startTime > recentTrigger.startTime)) {
+      recentEventPayload = eventPayload; // assign if in the past and empty or closer to now
+    }
+  });
+
+  console.log(`Next calendar event is: ${nextEventPayload.name} (
+${Utilities.formatDate(nextEventPayload.startTime, tz, 'HH:mm')}-\
+${Utilities.formatDate(nextEventPayload.endTime, tz, 'HH:mm')})`);
+  return recentEventPayload;
 }
 
 // Get next start or end time of any event today

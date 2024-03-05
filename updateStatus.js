@@ -13,11 +13,11 @@ function updateSlackStatus() {
   }
 
   // CASE 1: There is a scheduled Slack status via CRON expression -> update Slack status 
-  // Calculate the latest recent trigger time for each schedule and update status if any within 5 minutes
+  // Check for a recent trigger time for each schedule and update status if any
   var now = new Date();
   UPDATE_STATUS_CRONS.forEach(function(schedule) {
-    var latestTriggerTime = getLatestRecentCronTriggerTime(schedule.crons);
-    if (latestTriggerTime && (now - latestTriggerTime <= 5 * 60 * 1000)) { // if within 5 mins
+    var recentTriggerTime = getRecentCronTriggerTime(schedule.crons);
+    if (recentTriggerTime) { // if any
       setSlackStatus(schedule.statusEmoji, schedule.statusText, schedule.expirationMin, schedule.dnd);
       console.log("Slack status set based on your schedule")
       updated = true;
@@ -26,12 +26,13 @@ function updateSlackStatus() {
   });
   if (updated) return updated; // exit the function
 
-  // CASE 2: There is the next calendar event that started within 5 mins -> update Slack status
-  var nextEventDetails = getNextCalEventDetails();
-  if (nextEventDetails.name && now - nextEventDetails.startTime <= 5 * 60 * 1000) { // if within 5 mins
+  // CASE 2: There is a scheduled calendar event -> update Slack status
+  // Check for a recent event and update status if any
+  var recentEventDetails = getRecentCalEventDetails();
+  if (recentEventDetails.name) { // if any
     let statusEmoji = ":phone:"; // default emoji
-    let statusText = nextEventDetails.name.trim();
-    let expirationMin = nextEventDetails.length;
+    let statusText = recentEventDetails.name.trim();
+    let expirationMin = recentEventDetails.length;
     let dnd = true;
 
     let firstChar = statusText.charAt(0);
