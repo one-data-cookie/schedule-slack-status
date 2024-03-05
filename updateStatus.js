@@ -8,18 +8,18 @@ function updateSlackStatus() {
   // CASE 0: There already is a Slack status -> do nothing
   var isSlackStatusEmpty = checkSlackStatusIsEmpty();
   if (!isSlackStatusEmpty) {
-    console.log('Slack status is already set, not updating.');
+    console.log("Slack status is already set, not updating");
     return updated; // exit the function
   }
 
   // CASE 1: There is a scheduled Slack status via CRON expression -> update Slack status 
-  // Calculate the latest trigger time for each schedule and update status if any within 5 minutes
+  // Calculate the latest recent trigger time for each schedule and update status if any within 5 minutes
   var now = new Date();
   UPDATE_STATUS_CRONS.forEach(function(schedule) {
-    var latestTriggerTime = getLatestCronTriggerTime(schedule.crons);
+    var latestTriggerTime = getLatestRecentCronTriggerTime(schedule.crons);
     if (latestTriggerTime && (now - latestTriggerTime <= 5 * 60 * 1000)) { // if within 5 mins
       setSlackStatus(schedule.statusEmoji, schedule.statusText, schedule.expirationMin, schedule.dnd);
-      console.log("Slack status set based on your schedule.")
+      console.log("Slack status set based on your schedule")
       updated = true;
       return; // exit the loop
     }
@@ -41,7 +41,7 @@ function updateSlackStatus() {
     }
 
     setSlackStatus(statusEmoji, statusText, expirationMin, dnd);
-    console.log("Slack status set based on your calendar event.")
+    console.log("Slack status set based on your calendar event")
     updated = true;
   }
   if (updated) return updated; // exit the function with true
@@ -62,8 +62,10 @@ function createNextUpdateStatusTrigger() {
 
 // Update status
 function updateStatus() {
+  console.log("Starting updateStatus!")
+  
   // Load shared variables
-  console.log('Loading shared variables');
+  console.log("Loading shared variables");
   try {
     assignVariables();
   } catch (e) {
@@ -71,20 +73,20 @@ function updateStatus() {
   }
 
   // Update Slack status
-  console.log('Updating Slack status');
+  console.log("Updating Slack status");
   try {
     var wasUpdated = updateSlackStatus();
     if (wasUpdated) {
-      console.log("Slack status updated successfully.");
+      console.log("Slack status updated successfully");
     } else {
-      console.log("Slack status not updated.");
+      console.log("Slack status not updated");
     }
   } catch (e) {
     console.log("Failed to update Slack status: " + e.toString());
   }
 
   // Delete triggers, except updateDaily trigger
-  console.log('Deleting triggers, except updateDaily');
+  console.log("Deleting triggers, except updateDaily");
   try {
     deleteTriggers('updateDaily');
   } catch (e) {
@@ -92,10 +94,12 @@ function updateStatus() {
   }
 
   // Create next updateStatus trigger 
-  console.log('Creating next updateStatus trigger');
+  console.log("Creating next updateStatus trigger");
   try {
     createNextUpdateStatusTrigger();
   } catch (e) {
     console.log("Failed to create next updateStatus trigger: " + e.toString());
   }
+
+  console.log("All done!")
 }

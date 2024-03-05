@@ -42,13 +42,13 @@ function getNextCronTriggerTime(cronExpressions) {
   return nextTrigger;
 };
 
-// Get the latest trigger time from all CRON expressions
-function getLatestCronTriggerTime(cronExpressions) {
+// Get the latest recent trigger time from all CRON expressions
+function getLatestRecentCronTriggerTime(cronExpressions) {
   eval(loadCronLibrary());
   let latestTrigger = null;
 
   cronExpressions.forEach(cronExpression => {
-    // latest run = next run 10m ago
+    // recent run = next run 10m ago
     let now = new Date();
     let tenMinsAgo = new Date(now.getTime() - (10 * 60000)); // 10m ago
 
@@ -58,7 +58,7 @@ function getLatestCronTriggerTime(cronExpressions) {
       latestTrigger = lastTrigger;
     }
   });
-  console.log('Latest CRON ' + (latestTrigger ? 'trigger time: ' + latestTrigger.toString() : 'is NaN'));
+  console.log('Latest recent CRON ' + (latestTrigger ? 'trigger time: ' + latestTrigger.toString() : 'is not found'));
 
   return latestTrigger;
 }

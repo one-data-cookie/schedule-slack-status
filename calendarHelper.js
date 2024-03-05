@@ -20,7 +20,8 @@ function getNextCalEventDetails() {
     length: (nextEvent.getEndTime() - nextEvent.getStartTime()) / (1000 * 60) // in mins
   };
 
-  console.log('Next calendar event is: ' + nextEventPayload.toString());
+  console.log(`Next calendar event is: ${nextEventPayload.name} \
+  (${nextEventPayload.startTime.toLocaleString()} - ${nextEventPayload.endTime.toLocaleString()})`);
   return nextEventPayload;
 }
 

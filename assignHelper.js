@@ -13,5 +13,5 @@ var EMOJI_MAP = {
 };
 
 function assignVariables() {
-  console.log("All variables set up!")
+  console.log("All variables set up")
 }
