@@ -27,9 +27,9 @@ function getRecentCalEventDetails() {
     }
   });
 
-  console.log(`Next calendar event is: ${nextEventPayload.name} (
-${Utilities.formatDate(nextEventPayload.startTime, tz, 'HH:mm')}-\
-${Utilities.formatDate(nextEventPayload.endTime, tz, 'HH:mm')})`);
+  console.log(`Next calendar event is: ${recentEventPayload.name} (
+${Utilities.formatDate(recentEventPayload.startTime, tz, 'HH:mm')}-\
+${Utilities.formatDate(recentEventPayload.endTime, tz, 'HH:mm')})`);
   return recentEventPayload;
 }
 
