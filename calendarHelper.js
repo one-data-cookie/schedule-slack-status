@@ -22,7 +22,7 @@ function getRecentCalEventDetails() {
       length: (event.getEndTime() - event.getStartTime()) / (1000 * 60) // in mins
     };
 
-    if (eventPayload.startTime < now && (recentEventPayload === null || recentEventPayload.startTime > recentTrigger.startTime)) {
+    if (eventPayload.startTime < now && (recentEventPayload === null || recentEventPayload.startTime < eventPayload.startTime)) {
       recentEventPayload = eventPayload; // assign if in the past and empty or closer to now
     }
   });
