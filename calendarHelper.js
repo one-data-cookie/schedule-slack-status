@@ -27,10 +27,13 @@ function getRecentCalEventDetails() {
     }
   });
 
-  console.log(`Next calendar event is: ${recentEventPayload.name} (
-${Utilities.formatDate(recentEventPayload.startTime, tz, 'HH:mm')}-\
-${Utilities.formatDate(recentEventPayload.endTime, tz, 'HH:mm')})`);
-  return recentEventPayload;
+  console.log('Recent calendar event' + 
+    (recentEventPayload ? 
+      ': '
+      `${recentEventPayload.name} (` +
+      `${Utilities.formatDate(recentEventPayload.startTime, tz, 'HH:mm')}-` +
+      `${Utilities.formatDate(recentEventPayload.endTime, tz, 'HH:mm')})` :
+      ' is not found'));
 }
 
 // Get next start or end time of any event today

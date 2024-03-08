@@ -58,6 +58,10 @@ function getRecentCronTriggerTime(cronExpressions) {
     }
   });
 
-  console.log('Recent CRON ' + (recentTrigger ? 'trigger time: ' + recentTrigger.toString() : 'is not found'));
+  console.log('Recent CRON trigger time' +
+    (recentTrigger ?
+      ': ' +
+      recentTrigger.toString() :
+      ' is not found'));
   return recentTrigger;
 }
