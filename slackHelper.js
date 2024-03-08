@@ -40,7 +40,7 @@ function checkSlackStatusIsEmpty() {
 function setDoNotDisturb(numMinutes, token) {
   var options = {
     "method": "post",
-    "contentType": "application/x-www-form-urlencoded",
+    "contentType": "application/x-www-form-urlencoded; charset=utf-8",
     "headers": {
       "Authorization": "Bearer " + token
     },
@@ -72,7 +72,7 @@ function setSlackStatus(statusEmoji, statusText, expirationMin, dnd) {
 
   var options = {
     "method": "post",
-    "contentType": "application/json",
+    "contentType": "application/json; charset=utf-8",
     "headers": {
       "Authorization": "Bearer " + token
     },
