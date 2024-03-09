@@ -1,6 +1,3 @@
-// TODO: test it out
-// TODO: close it up
-
 // Add function with logic for setting Slack status
 function updateSlackStatus() {
   var updated = false;
