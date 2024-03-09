@@ -15,7 +15,7 @@ function updateSlackStatus() {
   UPDATE_STATUS_CRONS.forEach(function(schedule) {
     var recentTriggerTime = getRecentCronTriggerTime(schedule.crons);
     if (recentTriggerTime) { // if any
-      // Calculate expiration time based on the recentTriggerTime plus the expirationMin
+      // Calculate expirationTime based on the recentTriggerTime plus the expirationMin
       let expirationTime = new Date(recentTriggerTime.getTime() + schedule.expirationMin * 60000);
       setSlackStatus(schedule.statusEmoji, schedule.statusText, expirationTime, schedule.dnd);
       console.log("Slack status set based on your schedule")
