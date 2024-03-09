@@ -31,7 +31,7 @@ function updateSlackStatus() {
   // CASE 2: There is a scheduled calendar event -> update Slack status
   // Check for a recent event and update status if any
   var recentEventDetails = getRecentCalEventDetails();
-  if (recentEventDetails.name) { // if not empty
+  if (recentEventDetails) { // if any
     let statusEmoji = ":phone:"; // default emoji
     let statusText = recentEventDetails.name.trim();
     let expirationTime = recentEventDetails.endTime.getTime();

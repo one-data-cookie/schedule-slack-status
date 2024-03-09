@@ -33,6 +33,7 @@ function getRecentCalEventDetails() {
       `${Utilities.formatDate(recentEventPayload.startTime, tz, 'HH:mm')}-` +
       `${Utilities.formatDate(recentEventPayload.endTime, tz, 'HH:mm')})` :
       ' is not found'));
+  return recentEventPayload;
 }
 
 // Get next start or end time of any event today
