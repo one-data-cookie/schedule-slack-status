@@ -26,9 +26,9 @@ function getRecentCalEventDetails() {
     }
   });
 
-  console.log('Recent calendar event' + 
-    (recentEventPayload ? 
-      ': '
+  console.log('Recent calendar event' +
+    (recentEventPayload ?
+      ': ' +
       `${recentEventPayload.name} (` +
       `${Utilities.formatDate(recentEventPayload.startTime, tz, 'HH:mm')}-` +
       `${Utilities.formatDate(recentEventPayload.endTime, tz, 'HH:mm')})` :
