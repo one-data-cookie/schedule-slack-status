@@ -56,18 +56,13 @@ function setDoNotDisturb(numMinutes, token) {
 }
 
 // Set status in Slack with given emoji, expiration, and DND option
-function setSlackStatus(statusEmoji, statusText, expirationMin, dnd) {
+function setSlackStatus(statusEmoji, statusText, expirationTime, dnd) {
   var token = PropertiesService.getScriptProperties().getProperty('SLACK_API_TOKEN');
-  var expirationTime = 0;
-  if (expirationMin) {
-    let now = new Date().getTime()
-    expirationTime = new Date(now + expirationMin * 60000).getTime() / 1000;
-  }
 
   var status = {
     "status_emoji": statusEmoji,
     "status_text": statusText,
-    "status_expiration": expirationTime
+    "status_expiration": Math.floor(expirationTime / 1000) // Unix ts in secs
   };
 
   var options = {
@@ -86,7 +81,10 @@ function setSlackStatus(statusEmoji, statusText, expirationMin, dnd) {
     console.log("Failed to set Slack status: " + e.toString());
   }
 
-  if (dnd && expirationMin) {
+  let now = new Date().getTime();
+  var expirationMin = Math.ceil((expirationTime - now) / 60000); // diff in ms, then mins, round up
+
+  if (dnd && expirationMin > 0) {
     setDoNotDisturb(expirationMin, token);
   }
 }

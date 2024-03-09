@@ -18,8 +18,7 @@ function getRecentCalEventDetails() {
     var eventPayload = {
       name: event.getTitle(),
       startTime: event.getStartTime(),
-      endTime: event.getEndTime(),
-      length: (event.getEndTime() - event.getStartTime()) / (1000 * 60) // in mins
+      endTime: event.getEndTime()
     };
 
     if (eventPayload.startTime < now && (recentEventPayload === null || recentEventPayload.startTime < eventPayload.startTime)) {

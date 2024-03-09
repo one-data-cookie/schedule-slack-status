@@ -18,7 +18,9 @@ function updateSlackStatus() {
   UPDATE_STATUS_CRONS.forEach(function(schedule) {
     var recentTriggerTime = getRecentCronTriggerTime(schedule.crons);
     if (recentTriggerTime) { // if any
-      setSlackStatus(schedule.statusEmoji, schedule.statusText, schedule.expirationMin, schedule.dnd);
+      // Calculate expiration time based on the recentTriggerTime plus the expirationMin
+      let expirationTime = new Date(recentTriggerTime.getTime() + schedule.expirationMin * 60000);
+      setSlackStatus(schedule.statusEmoji, schedule.statusText, expirationTime, schedule.dnd);
       console.log("Slack status set based on your schedule")
       updated = true;
       return; // exit the loop
@@ -32,7 +34,7 @@ function updateSlackStatus() {
   if (recentEventDetails) { // if any
     let statusEmoji = ":phone:"; // default emoji
     let statusText = recentEventDetails.name.trim();
-    let expirationMin = recentEventDetails.length;
+    let expirationTime = recentEventDetails.endTime.getTime();
     let dnd = true;
 
     let firstChar = statusText.charAt(0);
@@ -41,7 +43,7 @@ function updateSlackStatus() {
       statusText = statusText.substring(1).trim(); // remove the emoji and any leading whitespace
     }
 
-    setSlackStatus(statusEmoji, statusText, expirationMin, dnd);
+    setSlackStatus(statusEmoji, statusText, expirationTime, dnd);
     console.log("Slack status set based on your calendar event")
     updated = true;
   }
