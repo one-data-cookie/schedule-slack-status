@@ -53,7 +53,7 @@ function getRecentCronTriggerTime(cronExpressions) {
 
     const nextTrigger = Cron(cronExpression).nextRun(fourMinsAgo); // runs from 4m ago and onwards
 
-    if (nextTrigger < now && (recentTrigger === null || nextTrigger > recentTrigger)) {
+    if (nextTrigger < now && (!recentTrigger || nextTrigger > recentTrigger)) {
       recentTrigger = nextTrigger; // assign if in the past and empty or closer to now
     }
   });

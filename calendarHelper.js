@@ -21,7 +21,7 @@ function getRecentCalEventDetails() {
       endTime: event.getEndTime()
     };
 
-    if (eventPayload.startTime < now && (recentEventPayload === null || recentEventPayload.startTime < eventPayload.startTime)) {
+    if (eventPayload.startTime < now && (!recentEventPayload || recentEventPayload.startTime < eventPayload.startTime)) {
       recentEventPayload = eventPayload; // assign if in the past and empty or closer to now
     }
   });
@@ -66,9 +66,9 @@ function getNextCalStartOrEnd() {
     }
   });
 
-  // Handle the case where there's no other event today
-  if (closestTime === null) {
-    console.log('No other events today.');
+  // Handle the case where there are no more events today
+  if (!closestTime) {
+    console.log('No more events today.');
     return null;
   }
 
